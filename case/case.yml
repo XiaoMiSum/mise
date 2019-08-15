@@ -1,0 +1,29 @@
+name: test
+config:
+  setup:
+    - __test()
+  teardown:
+    _ __test()
+  variables:
+    test: heihei
+case:
+  - title: ye
+    config:
+      setup:
+        - __test()
+      teardown:
+        _ __test()
+      variables:
+        test: heihei
+    step:
+      get:
+        selector: http://migoo.xyz
+      sendKeys:
+        selector: 'xpath=/html/body/div/div/a[1]'
+        object: 'migoo'
+      assert:
+        func: ==
+        actual:
+          operation: getText
+          selector: 'xpath=/html/body/div/div/a[1]'
+        object: 登录
