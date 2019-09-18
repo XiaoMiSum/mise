@@ -1,7 +1,7 @@
 package xyz.migoo.mise.exception;
 
 /**
- * @author yacheng.xiao
+ * @author xiaomi
  * @date 2019/8/14 9:24
  */
 public class MiSeException extends RuntimeException {

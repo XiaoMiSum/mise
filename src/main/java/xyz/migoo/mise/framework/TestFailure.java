@@ -1,7 +1,7 @@
-package xyz.migoo.mise.framework.core;
+package xyz.migoo.mise.framework;
 
 /**
- * @author yacheng.xiao
+ * @author xiaomi
  * @date 2019/8/15 11:06
  */
 public class TestFailure {

@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 import static org.openqa.selenium.remote.BrowserType.*;
 
 /**
- * @author yacheng.xiao
+ * @author xiaomi
  * @date 2019/8/13 20:11
  */
 public class DriverBuilder{

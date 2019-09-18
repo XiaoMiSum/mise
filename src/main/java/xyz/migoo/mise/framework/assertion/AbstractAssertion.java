@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import xyz.migoo.mise.framework.selenium.MiSe;
 
 /**
- * @author yacheng.xiao
+ * @author xiaomi
  * @date 2019/8/14 16:36
  */
 public abstract class AbstractAssertion {

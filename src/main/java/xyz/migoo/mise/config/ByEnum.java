@@ -1,7 +1,7 @@
 package xyz.migoo.mise.config;
 
 /**
- * @author yacheng.xiao
+ * @author xiaomi
  * @date 2019/8/14 11:40
  */
 public enum ByEnum {

@@ -4,13 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import org.openqa.selenium.*;
 import xyz.migoo.mise.config.ByEnum;
 import xyz.migoo.mise.exception.MiSeException;
+import xyz.migoo.mise.report.MiSeLog;
 
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author yacheng.xiao
+ * @author xiaomi
  * @date 2019/8/13 20:01
  */
 public class MiSe {
@@ -61,6 +62,7 @@ public class MiSe {
     public MiSe maximize() {
         if (this.driver != null) {
             this.driver.manage().window().maximize();
+            MiSeLog.log("window maximize");
         }
         return this;
     }
@@ -71,6 +73,7 @@ public class MiSe {
      */
     public void get(String url){
         driver.get(url);
+        MiSeLog.log("goto url: {}", url);
     }
 
     /**
@@ -79,6 +82,7 @@ public class MiSe {
      * @return The URL of the page currently loaded in the browser
      */
     public String getCurrentUrl(){
+        MiSeLog.log("get current url: {}", driver.getCurrentUrl());
         return driver.getCurrentUrl();
     }
 
@@ -89,6 +93,7 @@ public class MiSe {
      *         if one is not already set
      */
     public String getTitle(){
+        MiSeLog.log("get title: {}", driver.getTitle());
         return driver.getTitle();
     }
 
@@ -117,6 +122,7 @@ public class MiSe {
      * @return The source of the current page
      */
     public String getPageSource(){
+        MiSeLog.log("get page source");
         return driver.getPageSource();
     }
 
@@ -125,6 +131,7 @@ public class MiSe {
      */
     public void close(){
         if (driver != null) {
+            MiSeLog.log("window close: {}", driver.getWindowHandle());
             driver.close();
         }
     }
@@ -134,6 +141,7 @@ public class MiSe {
      */
     public void quit(){
         if (driver != null) {
+            MiSeLog.log("driver quit");
             driver.quit();
         }
     }
@@ -157,6 +165,7 @@ public class MiSe {
         } else {
             c = (Cookie) cookie;
         }
+        MiSeLog.log("add cookie: {}", c);
         driver.manage().addCookie(c);
     }
 
@@ -167,6 +176,7 @@ public class MiSe {
      * @return A Set of cookies for the current domain.
      */
     public Set<Cookie> getCookies(){
+        MiSeLog.log("get cookie");
         return driver.manage().getCookies();
     }
 
@@ -174,12 +184,14 @@ public class MiSe {
      * Refresh the current page
      */
     public void refresh(){
+        MiSeLog.log("driver refresh");
         driver.navigate().refresh();
     }
     /**
      * Move back a single "item" in the browser's history.
      */
     public void back(){
+        MiSeLog.log("driver back");
         driver.navigate().back();
     }
 
@@ -188,7 +200,8 @@ public class MiSe {
      * @param selector The locating mechanism
      */
     public void click(String selector){
-       this.findElement(selector).click();
+        MiSeLog.log("click: {}", selector);
+        this.findElement(selector).click();
     }
 
     /**
@@ -200,6 +213,7 @@ public class MiSe {
      * @throws NoSuchElementException If the given element is not within a form
      */
     public void submit(String selector){
+        MiSeLog.log("submit: {}", selector);
         this.findElement(selector).submit();
     }
 
@@ -214,6 +228,7 @@ public class MiSe {
     public void sendKeys(String selector, String keysToSend){
         this.findElement(selector).clear();
         this.findElement(selector).sendKeys(keysToSend);
+        MiSeLog.log("find element: {}, sendKeys: {}", selector, keysToSend);
     }
 
     /**
@@ -224,7 +239,9 @@ public class MiSe {
      * @return The attribute/property's current value or null if the value is not set.
      */
     public String getAttribute(String selector, String name){
-        return this.findElement(selector).getAttribute(name);
+        String value = this.findElement(selector).getAttribute(name);
+        MiSeLog.log("find element: {}, attribute: {}, value: {}", selector, name, value);
+        return value;
     }
 
     /**
@@ -235,7 +252,9 @@ public class MiSe {
      * @return True if the element is currently selected or checked, false otherwise.
      */
     public boolean isSelected(String selector){
-        return this.findElement(selector).isSelected();
+        boolean result = this.findElement(selector).isSelected();
+        MiSeLog.log("find element: {}, isSelected: {}", selector, result);
+        return result;
     }
 
     /**
@@ -246,7 +265,9 @@ public class MiSe {
      * @return True if the element is enabled, false otherwise.
      */
     public boolean isEnabled(String selector){
-        return this.findElement(selector).isEnabled();
+        boolean result = this.findElement(selector).isEnabled();
+        MiSeLog.log("find element: {}, isEnabled: {}", selector, result);
+        return result;
     }
 
     /**
@@ -256,7 +277,9 @@ public class MiSe {
      * @return The visible text of this element.
      */
     public String getText(String selector){
-        return this.findElement(selector).getText();
+        String text = this.findElement(selector).getText();
+        MiSeLog.log("find element: {}, text: {}", selector, text);
+        return text;
     }
 
     /**
@@ -267,7 +290,9 @@ public class MiSe {
      * @return Whether or not the element is displayed
      */
     public boolean isDisplayed(String selector){
-        return this.findElement(selector).isDisplayed();
+        boolean result = this.findElement(selector).isDisplayed();
+        MiSeLog.log("find element: {}, isDisplayed: {}", selector, result);
+        return result;
     }
 
     private By parseSelector(String selector){

@@ -1,7 +1,7 @@
-package xyz.migoo.mise.exception;
+package xyz.migoo.mise.loader.reader;
 
 /**
- * @author yacheng.xiao
+ * @author xiaomi
  * @date 2019/8/14 22:24
  */
 public class ReaderException extends Exception {

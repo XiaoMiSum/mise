@@ -1,0 +1,1 @@
+package xyz.migoo.mise.framework;/** * @author xiaomi * @date 2019/8/14 20:09 */public interface Test {    /**     * Returns count of the test.     * can return zero.     *     * @return test count     */    int countTestCases();    /**     * running test     * @param result the test result     */    void run(TestResult result);}
