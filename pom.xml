@@ -7,6 +7,37 @@
     <groupId>xyz.migoo</groupId>
     <artifactId>mise</artifactId>
     <version>1.0.0</version>
+    <name>mise</name>
+    <description>a tool for web-ui test</description>
+    <url>https://xiaomisum.github.io/mise/</url>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <licenses>
+        <license>
+            <name>MIT</name>
+            <url>https://github.com/XiaoMiSum/mise/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git@github.com:XiaoMiSum/mise.git</connection>
+        <developerConnection>scm:git:git@github.com:XiaoMiSum/mise.git</developerConnection>
+        <url>https://xiaomisum.github.io/mise/</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>xiao mi</name>
+            <email>mi_xiao@qq.com</email>
+            <organization>github</organization>
+            <organizationUrl>https://xiaomisum.github.io/mise/</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <jdk.version>1.8</jdk.version>
