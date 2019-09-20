@@ -23,6 +23,9 @@ public class MethodHelper {
      * 从指定 扩展类中 获取扩展函数
      */
     static Map<String, Method> loadFunction(Object[] classes) throws ExtenderException {
+        if (classes == null){
+            return new HashMap<>(0);
+        }
         try {
             Map<String, Method> map = new HashMap<>(100);
             for (Object clazz : classes) {
@@ -36,7 +39,7 @@ public class MethodHelper {
                 }
             }
             return map;
-        }catch (ClassNotFoundException e){
+        }catch (Exception e){
             throw new ExtenderException(e.getMessage());
         }
     }
@@ -56,7 +59,7 @@ public class MethodHelper {
         for (int i = 0; i < strParams.length; i++) {
             parseParameter(parameters, strParams[i], i);
             if (parameters[i] == null){
-               parseParameter(parameters, strParams[i], i, variables);
+                parseParameter(parameters, strParams[i], i, variables);
             }
         }
         return parameters;

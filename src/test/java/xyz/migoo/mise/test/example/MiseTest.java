@@ -11,6 +11,6 @@ public class MiseTest {
 
     @Test
     public void test(){
-        new TestRunner().chrome("./case/case.yml", "");
+        new TestRunner("MiSe").run("./case/case.yml", "./case/env.yml", "htmlunit");
     }
 }

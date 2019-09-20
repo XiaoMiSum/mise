@@ -62,7 +62,7 @@ public class DriverBuilder{
     }
 
     public DriverBuilder htmlUnit() {
-        return this.htmlUnit(null);
+        return this.htmlUnit(BrowserVersion.FIREFOX_60);
     }
 
     public DriverBuilder htmlUnit(BrowserVersion version) {

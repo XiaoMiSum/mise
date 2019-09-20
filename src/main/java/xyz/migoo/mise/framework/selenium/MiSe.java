@@ -2,7 +2,6 @@ package xyz.migoo.mise.framework.selenium;
 
 import com.alibaba.fastjson.JSONObject;
 import org.openqa.selenium.*;
-import xyz.migoo.mise.config.ByEnum;
 import xyz.migoo.mise.exception.MiSeException;
 import xyz.migoo.mise.report.MiSeLog;
 
@@ -297,28 +296,26 @@ public class MiSe {
 
     private By parseSelector(String selector){
         if (selector.startsWith(XPATH_1) || selector.startsWith(XPATH_2)) {
-            selector = String.format("%s=%s", ByEnum.XPATH.value(), selector);
+            selector = String.format("%s=%s", "xpath", selector);
         }
-        String[] str = selector.split(ByEnum.SPLITTER.value());
-        switch (ByEnum.valueOf(str[0])){
-            case ID:
-                return By.id(str[1]);
-            case CSS:
-                return By.cssSelector(str[1]);
-            case XPATH:
-                return By.xpath(str[1]);
-            case PARTIAL_LINK:
-                return By.partialLinkText(str[1]);
-            case LINK:
-                return By.linkText(str[1]);
-            case CLASS:
-                return By.className(str[1]);
-            case TAG_NAME:
-                return By.tagName(str[1]);
-            case NAME:
-                return By.name(str[1]);
-            default:
-                throw new MiSeException(String.format("unknown selector '%s'.", selector));
+        if (selector.startsWith("id=")){
+            return By.id(selector.substring(selector.indexOf("=") +1 ));
+        } else if (selector.startsWith("css=")){
+            return By.cssSelector(selector.substring(selector.indexOf("=") +1 ));
+        } else if (selector.startsWith("xpath=")){
+            return By.xpath(selector.substring(selector.indexOf("=") +1 ));
+        } else if (selector.startsWith("link=")){
+            return By.linkText(selector.substring(selector.indexOf("=") +1 ));
+        } else if (selector.startsWith("partiallink=")){
+            return By.partialLinkText(selector.substring(selector.indexOf("=") +1 ));
+        } else if (selector.startsWith("class=")){
+            return By.className(selector.substring(selector.indexOf("=") +1 ));
+        } else if (selector.startsWith("tagname=")){
+            return By.tagName(selector.substring(selector.indexOf("=") +1 ));
+        } else if (selector.startsWith("name=")){
+            return By.name(selector.substring(selector.indexOf("=") +1 ));
+        } else {
+            throw new MiSeException(String.format("unknown selector '%s'.", selector));
         }
     }
 

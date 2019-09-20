@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static xyz.migoo.mise.config.Platform.EXTENDS_CLASS;
+
 /**
  * @author xiaomi
  */
@@ -24,7 +26,7 @@ public class ExtenderHelper {
 
     static {
         try {
-            methods = MethodHelper.loadFunction(null);
+            methods = MethodHelper.loadFunction(EXTENDS_CLASS);
         } catch (ExtenderException e) {
             MiSeLog.log("load extends function exception. ", e);
         }
@@ -71,10 +73,11 @@ public class ExtenderHelper {
                 String v = (String) object;
                 if (v.equals(regex)) {
                     use.put(uKey, vars.getString(varsKey));
+                    MiSeLog.log("bind variable: {} -> {}", v, use.get(uKey));
                 }else if (v.contains(regex)) {
                     use.put(uKey, v.replace(regex, vars.getString(varsKey)));
+                    MiSeLog.log("bind variable: {} -> {}", v, use.get(uKey));
                 }
-                MiSeLog.log("bind variable: {} -> {}", v, use.get(uKey));
                 continue;
             }
             if (object instanceof JSONObject) {
@@ -95,11 +98,12 @@ public class ExtenderHelper {
                 if (v.equals(regex)) {
                     use.remove(i);
                     use.add(i, vars.getString(varsKey));
+                    MiSeLog.log("bind variable: {} -> {}", v, use.get(i));
                 } else if (v.contains(regex)) {
                     use.remove(i);
                     use.add(i, v.replace(regex, vars.getString(varsKey)));
+                    MiSeLog.log("bind variable: {} -> {}", v, use.get(i));
                 }
-                MiSeLog.log("bind variable: {} -> {}", v, use.get(i));
             }
             if (object instanceof JSONObject) {
                 bind((JSONObject) object, vars);

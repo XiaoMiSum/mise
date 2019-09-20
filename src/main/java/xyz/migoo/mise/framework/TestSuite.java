@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import xyz.migoo.mise.exception.ExtenderException;
 import xyz.migoo.mise.extender.ExtenderHelper;
+import xyz.migoo.mise.framework.selenium.DriverBuilder;
 import xyz.migoo.mise.framework.selenium.MiSe;
 import xyz.migoo.mise.report.MiSeLog;
 
@@ -29,10 +30,11 @@ public class TestSuite extends AbstractTest {
     }
 
     public TestSuite browser(String browser, JSONObject config){
-        miSe = MiSe.builder().browser(browser)
-                .bin(config.getString("bin"))
-                .driverBin(config.getString("driver"))
-                .build();
+        DriverBuilder builder = MiSe.builder().browser(browser);
+        if (config != null) {
+            builder.bin(config.getString("bin")).driverBin(config.getString("driver"));
+        }
+        miSe = builder.build();
         return this;
     }
 

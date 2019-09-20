@@ -1,7 +1,13 @@
 package xyz.migoo.mise.framework.assertion;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import xyz.migoo.mise.framework.selenium.MiSe;
+import xyz.migoo.mise.utils.StringUtil;
+
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author xiaomi
@@ -11,12 +17,52 @@ public abstract class AbstractAssertion {
 
     private JSONObject validate;
 
-    private Object actual;
+    protected Object actual;
 
+    protected Object expected;
+
+    private static ThreadLocal<DecimalFormat> decimalFormatter =
+            ThreadLocal.withInitial(AbstractAssertion::createDecimalFormat);
+
+    private static DecimalFormat createDecimalFormat() {
+        DecimalFormat decimalFormatter = new DecimalFormat("#.#");
+        // java.text.DecimalFormat.DOUBLE_FRACTION_DIGITS == 340
+        decimalFormatter.setMaximumFractionDigits(340);
+        decimalFormatter.setMinimumFractionDigits(1);
+        return decimalFormatter;
+    }
+    public AbstractAssertion(){}
+
+    public AbstractAssertion(Object actual, Object expected){
+        this.actual = actual;
+        this.expected = expected;
+    }
+
+    protected String objectToString(Object subj) {
+        String str;
+        if (subj == null || StringUtil.isEmpty(subj.toString())) {
+            str = "null";
+        } else if (subj instanceof List) {
+            str = ((List) subj).isEmpty()?"null": JSONArray.toJSONString(subj);
+        } else if (subj instanceof Map) {
+            //noinspection unchecked
+            str = ((Map) subj).isEmpty()?"null": JSONObject.toJSONString(subj);
+        } else if (subj instanceof Double || subj instanceof Float) {
+            str = decimalFormatter.get().format(subj);
+        } else {
+            str = subj.toString();
+        }
+        return str;
+    }
 
     public void setValidate(JSONObject validate){
         this.validate = validate;
     }
+
+    public void setExpected(Object expected){
+        this.expected = expected;
+    }
+
     public void actual(){
         Object obj = validate.get("actual");
         if (obj instanceof JSONObject) {
@@ -26,15 +72,21 @@ public abstract class AbstractAssertion {
         }
     }
 
+    public Object getActual(){
+        return actual;
+    }
+
+    public Object getExpected(){
+        return expected;
+    }
+
     /**
      * assert
      *
-     * @param expected  expected value
-     *
-     * @throws AssertionFailure assert result is false
-     * @throws ExecuteError running error
+     * @return result
+     * @throws Exception exception
      */
-    public abstract void assertThat(Object expected) throws AssertionFailure, ExecuteError;
+    public abstract boolean assertThat() throws Exception;
 
     private void setActualByDriver(JSONObject json){
         MiSe miSe = (MiSe) validate.get("driver");

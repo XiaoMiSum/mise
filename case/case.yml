@@ -1,30 +1,22 @@
-name: test
+name: MiSe演示
 config:
   class: xxxxx
-  setup:
-    - __test()
-  teardown:
-    - __test()
   variables:
     test: heihei
 case:
-  - title: ye
+  - title: 演示打开百度
     config:
-      setup:
-        - __test()
-      teardown:
-        - __test()
       variables:
         test: heihei
     step:
       get:
-        selector: http://migoo.xyz
+        selector: https://www.baidu.com
       sendKeys:
-        selector: 'xpath=/html/body/div/div/a[1]'
+        selector: 'id=kw'
         object: 'migoo'
       assert:
         func: ==
         actual:
           operation: getText
-          selector: 'xpath=/html/body/div/div/a[1]'
+          selector: 'xpath=//*[@id="u"]/a[3]'
         object: 登录

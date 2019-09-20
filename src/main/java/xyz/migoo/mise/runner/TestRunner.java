@@ -27,15 +27,20 @@ public class TestRunner {
 
     private Report report = new Report();
 
+    public TestRunner(){}
+
+    public TestRunner(String projectName){
+        report.setProjectName(projectName);
+    }
+
     public void run(String path, String env, String... browsers){
         try {
             this.env = TestLoader.load(env);
             this.parseEnv(env);
             for (String browser : browsers) {
                 this.run(new File(path), browser);
-                //todo browser_index.html
+                report.generateIndex();
             }
-            // todo report_index.html
         } catch (Exception e) {
             MiSeLog.log("init test exception.", e);
         }
@@ -75,6 +80,7 @@ public class TestRunner {
             TestSuite suite = new TestSuite(TestLoader.load(file.getPath()));
             TestResult result = this.runTest(suite, browser);
             report.addResult(result);
+            report.generateReport();
         }
     }
 
@@ -91,9 +97,9 @@ public class TestRunner {
     private void parseEnv(String env) throws ReaderException, ExtenderException {
         this.env = TestLoader.load(env);
         if (this.env != null){
-            JSONObject vars = this.env.getJSONObject("vars");
+            JSONObject vars = this.env.getJSONObject("vars") == null? new JSONObject() : this.env.getJSONObject("vars");
             ExtenderHelper.bindAndEval(vars, vars);
-            JSONArray hook = this.env.getJSONArray("hook");
+            JSONArray hook = this.env.getJSONArray("hook") == null ? new JSONArray() : this.env.getJSONArray("hook");
             for (int i = 0; i < hook.size(); i++) {
                 ExtenderHelper.hook(hook.getString(i), vars);
             }
